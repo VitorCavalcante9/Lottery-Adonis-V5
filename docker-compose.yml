@@ -1,0 +1,65 @@
+version: '3.8'
+
+services:
+  app:
+    container_name: 'prova'
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: provav5
+    volumes:
+      - app-prova:/home/node/app
+    ports:
+      - 3333:3333
+    networks:
+      - microsservices-prova
+    depends_on:
+      - db
+      - redis
+
+  migrations:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: provav5
+    restart: always
+    command: node ace migration:run
+    networks:
+      - microsservices-prova
+    depends_on:
+      - db
+
+  db:
+    image: mysql:5.7
+    restart: always
+    container_name: mysql-container
+    environment:
+      MYSQL_DATABASE: 'prova'
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: '123456'
+      MYSQL_ROOT_PASSWORD: '123456'
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+    volumes:
+      - db-prova:/var/lib/mysql
+    networks:
+      - microsservices-prova
+
+  redis:
+    image: redis
+    networks:
+      - microsservices-prova
+    ports:
+      - '6379:6379'
+
+volumes:
+  app-prova:
+    external: true
+  db-prova:
+    external: true
+
+networks:
+  microsservices-prova:
+    external: true

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <style>
+    * {
+      font-family: 'Helvetica';
+    }
+    header {
+      display: flex;
+      justify-content: center;
+      padding: 1rem;
+      color: #717171;
+      font-size: 3rem;
+      font-weight: 600;
+      font-style: italic;
+      border-bottom: 2px solid #ebebeb;
+    }
+    .section {
+      margin: 3rem 2rem;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    footer {
+      display: flex;
+      justify-content: center;
+      padding: 1rem;
+      color: #868686;
+      font-size: 0.75rem;
+      font-family: 'Helvetica';
+      font-style: italic;
+      border-top: 2px solid #ebebeb;
+    }
+  </style>
+</head>
+<body>
+  <header>TGL</header>
+
+  <div class='section'>
+    <h2>Sentimos sua falta, {{ name }}!</h2>
+
+    <p>Vimos que faz 1 semana que você não faz nenhuma aposta. Volte a apostar conosco, não se arrependerá!</p>
+  </div>
+
+  <footer>@ 2021 TGL - The Greatest App for Lottery</footer>
+</body>
+</html>
