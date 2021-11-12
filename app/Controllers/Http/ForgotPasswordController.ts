@@ -63,6 +63,7 @@ export default class ForgotPasswordController {
 
       await user.save();
     } catch (err) {
+      console.log(err);
       return response
         .status(err.status)
         .send({ error: { message: 'Algo deu errado ao resetar sua senha' } });

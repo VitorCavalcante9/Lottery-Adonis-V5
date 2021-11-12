@@ -1,5 +1,7 @@
 import { JobContract } from '@ioc:Rocketseat/Bull';
 import Mail from '@ioc:Adonis/Addons/Mail';
+import Producer from 'App/KafkaService/Producer';
+import Admin from 'App/Models/Admin';
 
 export default class NewBetMail implements JobContract {
   public key = 'NewBetMail';
@@ -14,6 +16,25 @@ export default class NewBetMail implements JobContract {
         numbers: bet.numbers.join(', '),
       };
     });
+
+    const admins = await Admin.query().preload('user', (userQuery) => {
+      userQuery.select('email');
+    });
+
+    const adminEmails = admins.map((admin) => {
+      return admin.user.email;
+    });
+
+    console.log(adminEmails);
+
+    const dataKafka = {
+      emails: adminEmails,
+      bets,
+      name: data.name,
+    };
+
+    const producer = new Producer();
+    producer.produce({ topic: 'new-bets', messages: [{ value: JSON.stringify(dataKafka) }] });
 
     await Mail.send((message) => {
       message

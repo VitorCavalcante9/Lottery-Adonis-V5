@@ -20,7 +20,7 @@
 
 import Route from '@ioc:Adonis/Core/Route';
 
-Route.get('/', ({ response }) => {
+Route.get('/', async ({ response }) => {
   return response.json({ hello: 'world' });
 });
 
