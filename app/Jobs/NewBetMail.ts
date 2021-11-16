@@ -9,7 +9,6 @@ export default class NewBetMail implements JobContract {
   public async handle(job) {
     const { data } = job;
 
-    console.log(data);
     const bets = data.bets.map((bet) => {
       return {
         ...bet,
@@ -24,8 +23,6 @@ export default class NewBetMail implements JobContract {
     const adminEmails = admins.map((admin) => {
       return admin.user.email;
     });
-
-    console.log(adminEmails);
 
     const dataKafka = {
       emails: adminEmails,
